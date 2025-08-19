@@ -1,29 +1,27 @@
 package challengebackenddeveloper.challengebackenddeveloper.Client;
 
 import challengebackenddeveloper.challengebackenddeveloper.Controller.Dto.ConversorResponseDto;
+import challengebackenddeveloper.challengebackenddeveloper.Model.Conversor;
+import challengebackenddeveloper.challengebackenddeveloper.Model.TaxaCambio;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 
-@Component
-@FeignClient(url = "https://economia.awesomeapi.com.br/")
+@FeignClient(url = "https://economia.awesomeapi.com.br", name = "economia")
 public interface ClientImport {
 
-    @GetMapping("json/last/{moedas}")
-    public ConversorResponseDto retornaMoedasSelecionadas(@PathVariable String moedas);
+    @GetMapping("/json/last/{moedas}")
+    public TaxaCambio retornaMoedasSelecionadas(@PathVariable("moedas") String moedas);
 
-    @GetMapping("json/daily/{moeda}/{numero_dias}")
-    public ConversorResponseDto retornaFechamentoDosUltimosDias(@PathVariable String moeda, Integer numero_dias);
+    @GetMapping("/json/daily/{moeda}/{numero_dias}")
+    public List<Conversor> retornaFechamentoDosUltimosDias(@PathVariable("moeda") String moeda, @PathVariable("numero_dias") Integer numeroDias);
 
-    @GetMapping("json/daily/{moeda}/{numero_dias}?start_date=20180901&end_date=20180930")
-    public  ConversorResponseDto retornaFechamentoPeriodoEspecifico(@PathVariable String moeda, Integer numero_dias);
 
     @GetMapping("/{moeda}/{quantidade}")
-    public ConversorResponseDto retornaCotacaoSequencialUnicaMoeda(@PathVariable String moeda, Integer numero_dias);
-    @GetMapping("{moeda}/{quantidade}?start_date=20200301&end_date=20200330")
-    public ConversorResponseDto retornaCotacaoSequencialIntervaloDePeriodo1Minuto(@PathVariable String moeda, String quantidade);
-    @GetMapping("{format}/{moeda}")
-    public ConversorResponseDto formatoDeResposta(@PathVariable String format, String moeda);
+    public List<Conversor> retornaCotacaoSequencialUnicaMoeda(@PathVariable("moeda")String moeda, @PathVariable("quantidade") Integer quantidade);
+
+    @GetMapping("/{format}/{moeda}")
+    public ConversorResponseDto formatoDeResposta(@PathVariable("format") String format, @PathVariable("moeda") String moeda);
 }

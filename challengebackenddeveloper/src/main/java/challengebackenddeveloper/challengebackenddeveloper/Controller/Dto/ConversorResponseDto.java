@@ -1,14 +1,24 @@
 package challengebackenddeveloper.challengebackenddeveloper.Controller.Dto;
 
 
-public record ConversorResponseDto(String code,
-                                   String codein,
-                                   String name,
-                                   String high,
-                                   String low,
-                                   Double varBid,// não sei se está correto
-                                   String pctChange,
-                                   String bid,
-                                   String timestamp,
-                                   String create_date) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ConversorResponseDto {
+    private String code;
+    private String codein;
+    private String name;
+    private String high;
+    private String low;
+    private String varBid;
+    private String pctChange;
+    private String bid;
+    private String timestamp;
+    private String create_date; // igual ao model
 }

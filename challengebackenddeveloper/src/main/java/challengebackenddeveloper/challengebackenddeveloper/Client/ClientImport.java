@@ -19,9 +19,14 @@ public interface ClientImport {
     public List<Conversor> retornaFechamentoDosUltimosDias(@PathVariable("moeda") String moeda, @PathVariable("numero_dias") Integer numeroDias);
 
 
-    @GetMapping("/{moeda}/{quantidade}")
+    @GetMapping("/{moeda}/{quantidade}") //intervalo de 1 minuto
     public List<Conversor> retornaCotacaoSequencialUnicaMoeda(@PathVariable("moeda")String moeda, @PathVariable("quantidade") Integer quantidade);
 
-    @GetMapping("/{format}/{moeda}")
-    public ConversorResponseDto formatoDeResposta(@PathVariable("format") String format, @PathVariable("moeda") String moeda);
+    @GetMapping("/{moeda}/{quantidade}?start_date=20180901&end_date=20180930")
+    public List<Conversor> retornaFechamentoPeriodoEspecificoIntervalo1Min(@PathVariable ("moeda")String moeda, @PathVariable ("quantidade") Integer quantidade);
+
+    @GetMapping("/{moeda}/{numero_dias}?start_date=20180901&end_date=20180930")
+    public List<Conversor> retornaFechamentoPeriodoEspecifico(@PathVariable ("moeda")String moeda, @PathVariable ("numero_dias") Integer numeroDias);
+
+
 }

@@ -44,5 +44,21 @@ public class ConversorController {
         return ResponseEntity.ok(conversorResponseDto);
     }
 
+    @GetMapping("/cotacao/sequencial1minuto/{moeda}/{quantidade}")
+    public ResponseEntity<List<ConversorResponseDto>> retornaCotacaoSequencialIntervalo1Minuto(@PathVariable String moeda,@PathVariable Integer quantidade) {
+        List<Conversor> conversores = clientImport.retornaFechamentoPeriodoEspecificoIntervalo1Min(moeda,quantidade);
+        Type listType = new TypeToken<List<ConversorResponseDto>>() {}.getType();
+        List<ConversorResponseDto> conversorResponseDto = modelMapper.map(conversores, listType);
+        return ResponseEntity.ok(conversorResponseDto);
+    }
+
+    @GetMapping("/moeda/periodo/especifico/{moeda}/{numero_dias}")// ok
+    public ResponseEntity<List<ConversorResponseDto>> retornaFechamentoPeriodoEspecifico(@PathVariable String moeda, @PathVariable("numero_dias") Integer numeroDias){
+        List<Conversor> conversores = clientImport.retornaFechamentoPeriodoEspecifico(moeda,numeroDias);
+        Type listType = new TypeToken<List<ConversorResponseDto>>() {}.getType();
+        List<ConversorResponseDto> conversorResponseDto = modelMapper.map(conversores, listType);
+        return ResponseEntity.ok(conversorResponseDto);
+    }
+
 
 }
